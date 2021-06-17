@@ -61,6 +61,7 @@ const AuthProvider = (props) => {
       handleRegister,
       handleLogin,
       handleLogout,
+      setUser,
     }}>
       {props.children}
     </AuthContext.Provider>
