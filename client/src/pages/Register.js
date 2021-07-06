@@ -1,8 +1,10 @@
 import React, {useContext} from 'react'
-import {Form} from 'semantic-ui-react'
 import { useFormInput } from '../customHooks/useFormInput'
 import { AuthContext } from '../providers/AuthProvider'
 import {useHistory} from 'react-router-dom'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+
 
 const Register = () => {
   //call history from react-router-dom so that we can pass it to AuthProvider so it can be used
@@ -12,7 +14,6 @@ const Register = () => {
   const {handleRegister} = useContext(AuthContext)
   //using the custom form input hook(initial value in field, label and placeholder for input)
   //need to drill down to get value. i.e. email.value
-  //FIXME: name isn't storeing on submit.
   //TODO: Remove dummy data.
   const name = useFormInput('Dummy', 'Name')
   const email = useFormInput('dummy@dummy.com', 'Email')
@@ -36,18 +37,27 @@ const Register = () => {
   }
   return(
     <>
-    <h1>Create User</h1>
+      <h1>Create User</h1>
       <Form onSubmit={handleSubmit}>
-        {/* FIXME: not currently working */}
-        <Form.Input {...name} label='Name doesnt work'/>
-        {/* Spread out over variable to pass down the items in the useFormInput('', 'Email').
-        pattern is used describe what is necessary to get a proper email.*/}
-        <Form.Input {...email} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
-        <Form.Input {...password} type='password'/>
-        <Form.Input {...ConfirmPassword} placeholder='Confirm Password'/>
-        <Form.Button>Submit</Form.Button>
+      <Form.Group className="mb-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control {...name} />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control {...email} />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control {...password} type="password" />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control {...ConfirmPassword} type="password" />
+          </Form.Group>
+          <Button variant="primary" type="submit">Submit</Button>
       </Form>
-    </>
+     </>
   )
 }
 
