@@ -29,13 +29,18 @@ const Home = () => {
       let data = new FormData();
       data.append("file", files[0].file);
       let res = await axios.post("/api/images/upload", data);
-      // console.log("res", res.data);
+      console.log("res", res.data.image);
+      createImageUi(res.data.image)
     } catch (err) {
       alert("err");
       console.log("err", err);
       console.log("err.response", err.response);
     }
   };
+
+  const createImageUi = (img) => {
+    setImages([img, ...images])
+  }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -55,7 +60,7 @@ const Home = () => {
         return (
             <Row key={i.id}>
             <Col>
-            <Card style={{ height: "200px", width: "250px", margin: "5px" }}>
+            <Card style={{ maxHeight: '200px', width: '250px', margin: "5px" }}>
               <Card.Body>
                 <Card.Text>{i.id}</Card.Text>
               </Card.Body>
