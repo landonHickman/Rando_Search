@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get '/tests', to: 'tests#index'
+    post '/images/upload', to: 'images#upload_1_image'
+    get '/images', to: 'images#index'
   end
 end
