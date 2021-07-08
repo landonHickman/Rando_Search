@@ -1,13 +1,10 @@
 import React, { useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { Nav, Col, Navbar, Container, Row } from "react-bootstrap";
-// import styled from 'styled-components'
-// import { BORDER_RADIUS, FONT_SIZES, NAV_BACKGROUND, TEXT_COLOR, WHITE_BACKGROUND } from '../styles/styles'
+
 
 const NavBar = () => {
-  //used to set which link is active
-  const { pathname } = useLocation();
   //used to send to another link
   const history = useHistory();
   // authenticated used to see if user is logged in or not.
@@ -43,10 +40,10 @@ const NavBar = () => {
         <Container fluid style={{ flexWrap: "wrap" }}>
           <Row>
             <Nav>
-              <Nav.Link to="/">Home</Nav.Link>
-              <Nav.Link to="/about">About</Nav.Link>
-              <Nav.Link to="/examples">Examples</Nav.Link>
-              <Nav.Link to="/tests">Tests</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/about">About</Nav.Link>
+              <Nav.Link href="/examples">Examples</Nav.Link>
+              <Nav.Link href="/tests">Tests</Nav.Link>
             </Nav>
           </Row>
           <Row>

@@ -3,7 +3,7 @@ import ButtonComp from '../components/ButtonComp'
 import FormattedMessage from '../components/FormattedMessage'
 import AxiosOnMountDemo from '../lecture/AxiosOnMountDemo'
 import HookDemo from '../lecture/HookDemo'
-import Button from 'react-bootstrap/Button'
+
 
 const Examples = () => {
   return (
