@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_060749) do
+ActiveRecord::Schema.define(version: 2021_07_09_210550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,10 +21,43 @@ ActiveRecord::Schema.define(version: 2021_07_08_060749) do
     t.string "url"
   end
 
+  create_table "pages", force: :cascade do |t|
+    t.string "page_title"
+    t.string "image"
+    t.bigint "topic_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_pages_on_topic_id"
+  end
+
+  create_table "refrences", force: :cascade do |t|
+    t.string "link"
+    t.string "text"
+    t.bigint "page_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["page_id"], name: "index_refrences_on_page_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "article_title"
+    t.text "body"
+    t.bigint "page_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["page_id"], name: "index_sections_on_page_id"
+  end
+
   create_table "tests", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "topic_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,4 +90,7 @@ ActiveRecord::Schema.define(version: 2021_07_08_060749) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "pages", "topics"
+  add_foreign_key "refrences", "pages"
+  add_foreign_key "sections", "pages"
 end
