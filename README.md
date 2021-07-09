@@ -28,3 +28,5 @@ goto localhost:3001 to see rails app
 1. remove remote `git remote remove origin`
 2. create new repo on github
 3. add remote `git remote add <ssh_link_here>`
+
+checking out if i can push to master
