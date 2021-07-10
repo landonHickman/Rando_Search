@@ -1,15 +1,21 @@
 import axios from 'axios'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import ShowTopic from '../components/ShowTopic'
 import '../App.css';
+import {AuthContext} from '../providers/AuthProvider'
+import TopicForm from '../components/TopicForm'
 
 const Home = () => {
-  const [topic1, setTopic1] = useState([])
-  const [topic2, setTopic2] = useState([])
-  const [topic3, setTopic3] = useState([])
-  const [showTopic1, setShowTopic1] = useState(false)
-  const [showTopic2, setShowTopic2] = useState(false)
-  const [showTopic3, setShowTopic3] = useState(false)
+  const [topic, setTopic] = useState([])
+  const [topicSingular, setTopicSingular] = useState([])
+  const [showTopic, setShowTopic] = useState(false)
+  const [showTopicButtons, setShowTopicButtons] = useState(true)
+  const [showImg, setShowImg] = useState(true)
+  const [showButton, setShowButton] = useState(true)
+  const [showTopicForm, setShowTopicForm] = useState(false)
+  const { authenticated} = useContext(AuthContext);
+
+
 
   useEffect(()=>{
     getTopics()
@@ -18,45 +24,58 @@ const Home = () => {
   const getTopics = async ()=> {
     let res = await axios.get('/api/topics')
     console.log(res.data)
-    setTopic1(res.data[0])
-    setTopic2(res.data[1])
-    setTopic3(res.data[2])
+    setTopic(res.data)
   }
 
-  const handleTopic1 =() => {
-    setShowTopic1(!showTopic1)
-    setShowTopic2(false)
-    setShowTopic3(false)
+  const handleClick = () => {
+    setShowTopicForm(!showTopicForm)
+    setShowImg(false)
   }
 
-  const handleTopic2 =() => {
-    setShowTopic1(false)
-    setShowTopic2(!showTopic2)
-    setShowTopic3(false)
+  const handleTopicClick = (id) => {
+    let test = topic.find(t=> t.id === id)
+    console.log(test)
+    setTopicSingular(test)
+    setShowTopic(true)
+    setShowImg(false)
+    setShowTopicButtons(false)
+  }
+  console.log(topicSingular)
+
+  const renderTopics = () => {
+    return topic.map(t=> {
+      return (
+        <div key={t.id}>
+          <button onClick={(e)=>handleTopicClick(t.id)}>{t.topic_name} {t.id}</button>
+        </div>
+      )
+    })
   }
 
-  const handleTopic3 =() => {
-    setShowTopic1(false)
-    setShowTopic2(false)
-    setShowTopic3(!showTopic3)
+  const createTopic = (t) => {
+    setTopic([t, ...topic])
+  }
+
+  const editTopic = (e) => {
+    setTopicSingular(e)
+
   }
 
   return (
     <>
     <div>
+      {showTopicButtons && renderTopics()}
+      <div>
 
-      <h1>Home</h1>
-      <button onClick={handleTopic1}>{topic1.topic_name}</button>
-      <button onClick={handleTopic2}>{topic2.topic_name}</button>
-      <button onClick={handleTopic3}>{topic3.topic_name}</button>
-      {showTopic1 && <ShowTopic topic={topic1}/>}
-      {showTopic2 && <ShowTopic topic={topic2}/>}
-      {showTopic3 && <ShowTopic topic={topic3}/>}
+      </div>
+      {showTopic && <ShowTopic topic={topicSingular} setShowImg={setShowImg} editTopic={editTopic}/>}
+
     </div>
-
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '800px'}}>
+    {authenticated && showButton && <button onClick={handleClick}>Create Topic</button>}
+    {showTopicForm && <TopicForm createTopic={createTopic}/>}
+    {showImg && <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '800px'}}>
       <img  src='https://lh3.googleusercontent.com/proxy/3tqXZ8VjyYZ3YL9oVuxtq7rrSDm83f7jXEc_7GtuI7-fiqsUKEAliQTy2v51iTUGTlcl0CcbxXvTNJl06k2wUFtm6YF33w3Y3Ct4gq1Qg882t4bkzuAGZiygfHJiYfETPGW9N5nrEkCOu_Z1B2Q'/>
-    </div>
+    </div>}
     </>
   )
 }
