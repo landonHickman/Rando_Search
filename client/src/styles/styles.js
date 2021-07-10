@@ -65,8 +65,8 @@ position:absolute;
 
 `
 export const H3 = styled.h3`
-margin-top: 200px;
+margin-top: 100px;
 `
 export const H4 = styled.h4`
-margin-top: 200px;
+margin-top: 100px;
 `
