@@ -66,7 +66,7 @@ const ShowTopic = (props) => {
       {authenticated && showButton && <button onClick={handleTopicForm}>Edit Topic</button>}
       {showTopicForm && <TopicForm topicId={topic.id} name={topic.topic_name} editTopic={editTopic}/>}
 
-      <button onClick={(e)=>handleDelete(topic.id)}>Delete</button>
+      {authenticated && <button onClick={(e)=>handleDelete(topic.id)}>Delete</button>}
       <div style={{display: 'flex', margin: '10px', alignItems: 'center', }}>
       {/* {showArticle && <ArticlePage topicId={topic.id} pageId={pageId}/>} */}
       {showPages && renderPages()}
