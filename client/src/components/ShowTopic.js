@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import { AuthContext } from '../providers/AuthProvider'
 import TopicForm from './TopicForm'
-
+import ArticlePage from '../pages/ArticlePage'
 
 const ShowTopic = (props) => {
   const [pages, setPages] = useState([])
@@ -13,6 +13,7 @@ const ShowTopic = (props) => {
   const [showTopicForm, setShowTopicForm] = useState(false)
   const { authenticated} = useContext(AuthContext);
   const {topic, setShowImg, editTopic, setShowTopicButtons, setShowTopic, deleteTopic } = props
+  
   console.log('topic',topic)
 
 
@@ -68,7 +69,7 @@ const ShowTopic = (props) => {
 
       {authenticated && <button onClick={(e)=>handleDelete(topic.id)}>Delete</button>}
       <div style={{display: 'flex', margin: '10px', alignItems: 'center', }}>
-      {/* {showArticle && <ArticlePage topicId={topic.id} pageId={pageId}/>} */}
+      {showArticle && <ArticlePage topicId={topic.id} pageId={pageId}/>}
       {showPages && renderPages()}
       </div>
     </div>
