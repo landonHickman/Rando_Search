@@ -45,3 +45,28 @@ export const Button = styled.button`
     background-color: lightblue;
   }
 `
+export const A = styled.a`
+  padding: 5px;
+  background-color: aliceblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 3px;
+  color: black;
+  :hover {
+    background-color: lightblue;
+  }
+`
+
+export const Footer = styled.footer`
+position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;
+
+`
+export const H3 = styled.h3`
+margin-top: 200px;
+`
+export const H4 = styled.h4`
+margin-top: 200px;
+`
