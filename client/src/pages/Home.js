@@ -70,6 +70,7 @@ const Home = () => {
   return (
     <>
       <div>
+        <h1>Rando Search</h1>
         {showTopicButtons && renderTopics()}
         <div></div>
         {showTopic && (
