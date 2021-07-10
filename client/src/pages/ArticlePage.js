@@ -54,7 +54,7 @@ const ArticlePage = (props) => {
     return art.map((article) => {
       return (
         <div key={article.id}>
-          <h4>{pageId.page_title}</h4>
+          
           <h4>{article.article_title}</h4>
           <h4>{article.body}</h4>
           
@@ -65,6 +65,7 @@ const ArticlePage = (props) => {
  
   return (
     <div>
+      <h2>{pageId.page_title}</h2>
       {renderTopics()}
     </div>
   );
