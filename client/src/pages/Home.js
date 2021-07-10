@@ -1,77 +1,105 @@
-import React, { useState, useEffect } from "react";
-import { FilePond, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import { Button, Form, Card, Row, Col } from "react-bootstrap";
 import axios from "axios";
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+import React, { useState, useEffect, useContext } from "react";
+import ShowTopic from "../components/ShowTopic";
+import "../App.css";
+import { AuthContext } from "../providers/AuthProvider";
+import TopicForm from "../components/TopicForm";
 
 const Home = () => {
-  const [files, setFiles] = useState([]);
-  const [images, setImages] = useState([]);
+  const [topic, setTopic] = useState([]);
+  const [topicSingular, setTopicSingular] = useState([]);
+  const [showTopic, setShowTopic] = useState(false);
+  const [showTopicButtons, setShowTopicButtons] = useState(true);
+  const [showImg, setShowImg] = useState(true);
+  const [showButton, setShowButton] = useState(true);
+  const [showTopicForm, setShowTopicForm] = useState(false);
+  const { authenticated } = useContext(AuthContext);
 
   useEffect(() => {
-    getImages();
+    getTopics();
   }, []);
 
-  const getImages = async () => {
-    let res = await axios.get("/api/images");
+  const getTopics = async () => {
+    let res = await axios.get("/api/topics");
     console.log(res.data);
-    setImages(res.data);
+    setTopic(res.data);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(files);
-    try {
-      let data = new FormData();
-      data.append("file", files[0].file);
-      let res = await axios.post("/api/images/upload", data);
-      console.log("res", res.data.image);
-      createImageUi(res.data.image)
-    } catch (err) {
-      alert("err");
-      console.log("err", err);
-      console.log("err.response", err.response);
-    }
+  const handleClick = () => {
+    setShowTopicForm(!showTopicForm);
+    setShowImg(false);
   };
 
-  const createImageUi = (img) => {
-    setImages([img, ...images])
+  const handleTopicClick = (id) => {
+    let test = topic.find((t) => t.id === id);
+    console.log(test);
+    setTopicSingular(test);
+    setShowTopic(true);
+    setShowImg(false);
+    setShowTopicButtons(false);
+    setShowTopicForm(false);
+    setShowButton(false);
+  };
+  console.log(topicSingular);
+
+  const renderTopics = () => {
+    return topic.map((t) => {
+      return (
+        <div key={t.id}>
+          <button onClick={(e) => handleTopicClick(t.id)}>
+            {t.topic_name} {t.id}
+          </button>
+        </div>
+      );
+    });
+  };
+
+  const createTopic = (t) => {
+    setTopic([t, ...topic]);
+  };
+
+  const editTopic = (e) => {
+    setTopicSingular(e);
+  };
+
+  const deleteTopic = (top) => {
+    
+    setTopic(topic.filter(t => t.id !== top.id))
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Home</h1>
-      <Form onSubmit={handleSubmit}>
-        <FilePond
-          files={files}
-          allowReorder={true}
-          allowMultiple={false}
-          onupdatefiles={setFiles}
-          labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-        />
-        <Button type="submit">Submit</Button>
-      </Form>
-      <div  style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-      {images.map((i) => {
-        return (
-            <Row key={i.id}>
-            <Col>
-            <Card style={{ maxHeight: '200px', width: '250px', margin: "5px" }}>
-              <Card.Body>
-                <Card.Text>{i.id}</Card.Text>
-              </Card.Body>
-              <Card.Img variant="top" src={i.url} />
-            </Card>
-            </Col>
-            </Row>
-        );
-      })}
+    <>
+      <div>
+        {showTopicButtons && renderTopics()}
+        <div></div>
+        {showTopic && (
+          <ShowTopic
+            topic={topicSingular}
+            setShowImg={setShowImg}
+            editTopic={editTopic}
+            setShowTopicButtons={setShowTopicButtons}
+            setShowTopic={setShowTopic}
+            deleteTopic={deleteTopic}
+          />
+        )}
       </div>
-    </div>
+      {authenticated && showButton && (
+        <button onClick={handleClick}>Create Topic</button>
+      )}
+      {showTopicForm && <TopicForm createTopic={createTopic} />}
+      {showImg && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "800px",
+          }}
+        >
+          <img src="https://lh3.googleusercontent.com/proxy/3tqXZ8VjyYZ3YL9oVuxtq7rrSDm83f7jXEc_7GtuI7-fiqsUKEAliQTy2v51iTUGTlcl0CcbxXvTNJl06k2wUFtm6YF33w3Y3Ct4gq1Qg882t4bkzuAGZiygfHJiYfETPGW9N5nrEkCOu_Z1B2Q" />
+        </div>
+      )}
+    </>
   );
 };
 
