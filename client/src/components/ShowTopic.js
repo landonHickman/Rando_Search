@@ -30,7 +30,7 @@ const ShowTopic = (props) => {
   const renderPages = () => {
     return pages.map(p=> {
       return (
-        <div key={p.id} style={{ padding: '10px', justifyContent: 'center'}} onClick={(e)=>handelRevealArticle(p.id)} >
+        <div key={p.id} style={{ padding: '10px', justifyContent: 'center'}} onClick={(e)=>handelRevealArticle(p)} >
           <h2>{p.page_title}</h2>
           <img src={p.image} style={{height: '200px', }}/>
           <button>View article</button>
