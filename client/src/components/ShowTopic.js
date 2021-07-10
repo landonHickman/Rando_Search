@@ -12,7 +12,7 @@ const ShowTopic = (props) => {
   const [showButton, setShowButton] = useState(true)
   const [showTopicForm, setShowTopicForm] = useState(false)
   const { authenticated} = useContext(AuthContext);
-  const {topic, setShowImg, editTopic } = props
+  const {topic, setShowImg, editTopic, setShowTopicButtons, setShowTopic, deleteTopic } = props
   console.log('topic',topic)
 
 
@@ -51,7 +51,14 @@ const ShowTopic = (props) => {
     setShowImg(false)
   }
 
-  
+  const handleDelete = async(d) => {
+    console.log(d)
+    let res = await axios.delete(`/api/topics/${d}`)
+    console.log(res.data)
+    setShowTopicButtons(true)
+    setShowTopic(false)
+    deleteTopic(res.data)
+  }
   
   return (
     <div>
@@ -59,11 +66,10 @@ const ShowTopic = (props) => {
       {authenticated && showButton && <button onClick={handleTopicForm}>Edit Topic</button>}
       {showTopicForm && <TopicForm topicId={topic.id} name={topic.topic_name} editTopic={editTopic}/>}
 
-      
+      <button onClick={(e)=>handleDelete(topic.id)}>Delete</button>
       <div style={{display: 'flex', margin: '10px', alignItems: 'center', }}>
       {/* {showArticle && <ArticlePage topicId={topic.id} pageId={pageId}/>} */}
       {showPages && renderPages()}
-
       </div>
     </div>
   )
