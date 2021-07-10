@@ -4,6 +4,7 @@ import ShowTopic from "../components/ShowTopic";
 import "../App.css";
 import { AuthContext } from "../providers/AuthProvider";
 import TopicForm from "../components/TopicForm";
+import { Button } from "../styles/styles";
 
 const Home = () => {
   const [topic, setTopic] = useState([]);
@@ -46,9 +47,9 @@ const Home = () => {
     return topic.map((t) => {
       return (
         <div key={t.id}>
-          <button onClick={(e) => handleTopicClick(t.id)}>
+          <Button onClick={(e) => handleTopicClick(t.id)}>
             {t.topic_name} {t.id}
-          </button>
+          </Button>
         </div>
       );
     });
@@ -72,7 +73,6 @@ const Home = () => {
       <div>
         <h1>Rando Search</h1>
         {showTopicButtons && renderTopics()}
-        <div></div>
         {showTopic && (
           <ShowTopic
             topic={topicSingular}
@@ -85,7 +85,7 @@ const Home = () => {
         )}
       </div>
       {authenticated && showButton && (
-        <button onClick={handleClick}>Create Topic</button>
+        <Button onClick={handleClick}>Create Topic</Button>
       )}
       {showTopicForm && <TopicForm createTopic={createTopic} />}
       {showImg && (

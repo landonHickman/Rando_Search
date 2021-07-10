@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-
+import { Button } from '../styles/styles'
 
 const TopicForm = (props) => {
   const [name, setName]= useState(props.name ? props.name : '')
@@ -31,7 +31,7 @@ const TopicForm = (props) => {
       <form onSubmit={handleSubmit}>
         <p>Name</p>
         <input value={name} onChange={(e)=>setName(e.target.value)}/>
-        <button>Submit</button>
+        <Button>Submit</Button>
       </form>
     </div>
 
