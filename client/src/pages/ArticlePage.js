@@ -11,6 +11,8 @@ const ArticlePage = (props) => {
   const [showEditForm, setShowEditForm] = useState(false);
   const { topicId, pageId, updatePage, handleDeletePage } = props;
   const { authenticated } = useContext(AuthContext);
+  console.log(topicId)
+  console.log(pageId)
   useEffect(() => {
     getArticles();
   }, []);
@@ -26,6 +28,7 @@ const ArticlePage = (props) => {
       console.log(err.response);
     }
   };
+  console.log(art)
 
   const normalizeArticle = (art) => {
     const topic_id = art.map((a) => a.topic_id);

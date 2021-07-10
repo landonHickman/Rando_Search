@@ -41,11 +41,7 @@ const ShowTopic = (props) => {
   const renderPages = () => {
     return pages.map((p) => {
       return (
-        <div
-          key={p.id}
-          style={{ padding: "10px", justifyContent: "center" }}
-          onClick={(e) => handelRevealArticle(p)}
-        >
+        <div key={p.id} style={{ display: 'flex', padding: '10px', flexDirection: 'column', justifyContent: 'center', flexWrap: 'wrap'}} onClick={(e)=>handelRevealArticle(p)} >
           <h2>{p.page_title}</h2>
           <img src={p.image} style={{ height: "200px" }} />
           <Button onClick={handleViewArticle}>View article</Button>
@@ -57,6 +53,7 @@ const ShowTopic = (props) => {
     setToggleCreatePageButton(false);
     setToggleDeleteButton(false);
     setShowEditButton(false);
+    setShowArticle(true)
   };
 
   const handelRevealArticle = (id) => {
@@ -136,7 +133,9 @@ const ShowTopic = (props) => {
             handleDeletePage={handleDeletePage}
           />
         )}
+        <div style={{display: 'flex', flexWrap: 'wrap'}}>
         {showPages && renderPages()}
+      </div>
       </div>
     </div>
   );
