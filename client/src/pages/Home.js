@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import ShowTopic from "../components/ShowTopic";
 import "../App.css";
-import { AuthContext } from "../providers/AuthProvider";
+
 import TopicForm from "../components/TopicForm";
+import { Button } from "../styles/styles";
 
 const Home = () => {
   const [topic, setTopic] = useState([]);
@@ -13,7 +14,8 @@ const Home = () => {
   const [showImg, setShowImg] = useState(true);
   const [showButton, setShowButton] = useState(true);
   const [showTopicForm, setShowTopicForm] = useState(false);
-  const { authenticated } = useContext(AuthContext);
+  const [showTitle, setShowTitle] = useState(true);
+
 
   useEffect(() => {
     getTopics();
@@ -21,34 +23,30 @@ const Home = () => {
 
   const getTopics = async () => {
     let res = await axios.get("/api/topics");
-    console.log(res.data);
+    // console.log(res.data);
     setTopic(res.data);
-  };
-
-  const handleClick = () => {
-    setShowTopicForm(!showTopicForm);
-    setShowImg(false);
   };
 
   const handleTopicClick = (id) => {
     let test = topic.find((t) => t.id === id);
-    console.log(test);
+    // console.log(test);
     setTopicSingular(test);
     setShowTopic(true);
     setShowImg(false);
     setShowTopicButtons(false);
     setShowTopicForm(false);
     setShowButton(false);
+    setShowTitle(false)
   };
-  console.log(topicSingular);
+  // console.log(topicSingular);
 
   const renderTopics = () => {
     return topic.map((t) => {
       return (
         <div key={t.id}>
-          <button onClick={(e) => handleTopicClick(t.id)}>
-            {t.topic_name} {t.id}
-          </button>
+          <Button onClick={(e) => handleTopicClick(t.id)}>
+            {t.topic_name}
+          </Button>
         </div>
       );
     });
@@ -69,9 +67,11 @@ const Home = () => {
 
   return (
     <>
-      <div>
-        {showTopicButtons && renderTopics()}
-        <div></div>
+      <div style={{textAlign: 'center'}}>
+        {showTitle && <h1>Rando Search</h1>}
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+        {showTopicButtons && renderTopics()}  
+        </div>
         {showTopic && (
           <ShowTopic
             topic={topicSingular}
@@ -83,9 +83,6 @@ const Home = () => {
           />
         )}
       </div>
-      {authenticated && showButton && (
-        <button onClick={handleClick}>Create Topic</button>
-      )}
       {showTopicForm && <TopicForm createTopic={createTopic} />}
       {showImg && (
         <div
@@ -93,10 +90,13 @@ const Home = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "800px",
+            margin: 'auto',
+            width: "400px",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '500px'
           }}
         >
-          <img src="https://lh3.googleusercontent.com/proxy/3tqXZ8VjyYZ3YL9oVuxtq7rrSDm83f7jXEc_7GtuI7-fiqsUKEAliQTy2v51iTUGTlcl0CcbxXvTNJl06k2wUFtm6YF33w3Y3Ct4gq1Qg882t4bkzuAGZiygfHJiYfETPGW9N5nrEkCOu_Z1B2Q" />
+          <img src="http://www.wastetodaymagazine.com/fileuploads/image/2020/04/22/AdobeStock35274439-Isolated-Planet-Earth-showing-Europe-and-Africa.jpg?w=736&h=414&mode=crop" alt="Earth" />
         </div>
       )}
     </>

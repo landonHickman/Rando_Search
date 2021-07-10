@@ -36,3 +36,12 @@ export const MAIN_CONTAINER = styled.div`
   margin: 10px;
   padding: 20px;
 `
+export const Button = styled.button`
+  background-color: aliceblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 3px;
+  :hover {
+    background-color: lightblue;
+  }
+`
