@@ -15,7 +15,7 @@ const ShowTopic = (props) => {
   const { authenticated} = useContext(AuthContext);
   const {topic, setShowImg, editTopic, setShowTopicButtons, setShowTopic, deleteTopic } = props
   
-  console.log('topic',topic)
+  // console.log('topic',topic)
 
 
   useEffect(()=>{

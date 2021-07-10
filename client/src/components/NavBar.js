@@ -42,6 +42,7 @@ const NavBar = () => {
             <Nav>
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/about">About</Nav.Link>
+              {authenticated && <Nav.Link href="/create_topic">Create Topic</Nav.Link>}
               {/* <Nav.Link href="/ArticlePage">Articles</Nav.Link>
               <Nav.Link href="/examples">Examples</Nav.Link>
               <Nav.Link href="/tests">Tests</Nav.Link> */}
