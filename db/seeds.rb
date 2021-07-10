@@ -10,7 +10,7 @@ Topic.destroy_all
 Page.destroy_all
 Section.destroy_all
 
-tvname = ['Scienfield', 'Big Bang Theory', 'How I Met Your Mother', 'The Office']
+tvname = ['Seinfeld', 'Big Bang Theory', 'How I Met Your Mother', 'The Office']
 
 tv = Topic.create(topic_name: 'TV-Show')
 science = Topic.create(topic_name: 'Science')
