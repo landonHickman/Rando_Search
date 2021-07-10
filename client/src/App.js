@@ -9,6 +9,7 @@ import {MAIN_CONTAINER} from './styles/styles'
 import Register from './pages/Register';
 import Login from './pages/Login';
 import FetchUser from './components/FetchUser';
+import ArticlePage from './pages/ArticlePage';
 // import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/examples' component={Examples} />
+      <Route exact path='/ArticlePage' component={ArticlePage} />
       <Route exact path='/about' component={About} />
       <Route exact path='/tests' component={Tests} />
       <Route exact path='/register' component={Register} />
